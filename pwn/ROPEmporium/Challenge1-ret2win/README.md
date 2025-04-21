@@ -1,5 +1,5 @@
 # Ret2win
-For this challenge (and the other ROP Emporium challenges), I downloaded the 64-bit binary.
+For this challenge (and the other ROP Emporium challenges), we will look at the 64 bit binaries.
 
 Using checksec, we find the following defenses in place:
 ```
@@ -76,7 +76,7 @@ payload += ret2win
 ```
 This now works and prints out the flag!
 
-The full script I used can be found below. For this script I used the
+The full script can be found below. This script uses the
 [pwn template](
 https://radboudinstituteof.pwning.nl/posts/how2pwn/) from the Radboud CTF team.
 
@@ -122,7 +122,7 @@ else:
 """
 
 # ===========================================================
-#                    EXPLOIT GOES HERE
+#                    EXPLOIT STARTS HERE
 # ===========================================================
 
 io = start()
