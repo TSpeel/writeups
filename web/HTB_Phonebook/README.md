@@ -1,7 +1,7 @@
 # HackTheBox Phonebook
 ## Reconnaisance
 After booting up the challenge, we are greeted with the following login screen:
-![Login screen](/HTB:Phonebook/images/login.PNG)
+![Login screen](/web/HTB_Phonebook/images/login.PNG)
 This screen reveals some interesting information. First of all, the website allows for logging in with workstation usernames and passwords. It is thus most likely connected to Active Directory in some way. Second, there is most likely a user named Reese.
 
 My first idea here was to use dirbuster to see if there were any files exposed that would reveal workstation credentials. However, my dirbuster scan did not result in any interesting files. Instead, I went researching what technology could be behind the AD login to see what it is that we are attacking. My search resulted in the following two forum posts:
@@ -17,7 +17,7 @@ To summarize, LDAP injection works somewhat similar to SQL injection. The userna
 
 Remember that at the start of the challenge we identified the user Reese. We can try to login using the username Reese, and as password we can use *. This works! We land on a page that seems to be the actual phonebook. We can search through the phonebook on this page, which results in some names with email addresses and phone numbers. However, there is nothing that immediately looks like it would contain a flag.
 
-![Phonebook](/HTB:Phonebook/images/phonebook.PNG)
+![Phonebook](/web/HTB_Phonebook/images/phonebook.PNG)
 
 Here I got stuck for a bit, as it was not clear what we should attack next to get the flag for the challenge. I read through the ![PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LDAP%20Injection/README.md) page again, and realised we might want to try blind exploitation. This allows us to brute force the password one by one, whereas previously we just bypassed the password altogether. This allows us to figure out the password, which will hopefully be the flag for the challenge. We can test if Reese's password contains the flag by logging in with the username Reese, and password HTB*. This will be successful if the password starts with HTB, indicating it is a flag. Luckily, this works!
 
