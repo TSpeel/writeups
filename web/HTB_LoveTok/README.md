@@ -21,7 +21,7 @@ class TimeModel
     }
 }
 ```
-Upon seeing this code, my alarm bells for command injection immediately go off. I immediately tried some common command injection techniques, but this did not immediately work. Taking a second look at the code explains why; `addslashes()` is used to escape the input string. We can take a look at the [addslashes() docs](https://www.php.net/manual/en/function.addslashes.php), which reveals this is an escaping function. However, it also reveals that it is not safe for preventing i.e. SQL injection. 
+This kind of code with `eval()` screams command injection. I started off by trying some common command injection techniques, but this did not immediately work. Taking a second look at the code explains why; `addslashes()` is used to escape the input string. We can take a look at the [addslashes() docs](https://www.php.net/manual/en/function.addslashes.php), which reveals this is an escaping function. However, it also reveals that it is not safe for preventing i.e. SQL injection. 
 
 At this point, it is clear that the goal of the challenge is to bypass the `addslashes()` and achieve command injection. Googling for "php addslashes exploit" results in some pages on SQL injection, and a page about [addslashes() in eval safety](https://security.stackexchange.com/questions/263114/php-is-addslashes-in-eval-really-that-unsafe). This post also links to an article titled "[Using complex variables to bypass the addlashes function to achieve RCE](https://www.programmersought.com/article/30723400042/)". These posts explain that the characters $, {, }, ( and ) are not escaped, which allows injecting of inline commands. This means you can still use commands inside of the string context with a payload such as:
 ```
