@@ -14,7 +14,7 @@ Admittedly, it took me a while to realise that the page we are trying to access 
 
 ![7times7](/web/HTB_Templated/images/7times7.PNG)
 
-Great! We've confirmed Jinja2 SSTI works. Now I went looking for a payload to turn this into RCE. I found the following payload on this ![article](https://medium.com/@0xAwali/template-engines-injection-101-4f2fe59e5756) (this executes `ls`):
+Great! We've confirmed Jinja2 SSTI works. Now I went looking for a payload to turn this into RCE. I found the following payload on this [article](https://medium.com/@0xAwali/template-engines-injection-101-4f2fe59e5756) (this executes `ls`):
 
 ```
 {{self.__init__.__globals__.__builtins__.__import__('os').popen('ls').read()}}
