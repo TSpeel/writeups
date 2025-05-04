@@ -8,7 +8,7 @@ My first idea here was to use dirbuster to see if there were any files exposed t
 
 ![Using active directory to authenticate users on intranet site](https://stackoverflow.com/questions/17773643/using-active-directory-to-authenticate-users-on-intranet-site)
 
-![What is it called when you can log into multiple workstations with one username and password]([https://pages.github.com/](https://askubuntu.com/questions/727504/what-is-it-called-when-you-can-log-into-multiple-workstations-with-one-username))
+![What is it called when you can log into multiple workstations with one username and password](https://askubuntu.com/questions/727504/what-is-it-called-when-you-can-log-into-multiple-workstations-with-one-username)
 
 These posts revealed that we are most likely looking at an LDAP login. Searching for LDAP vulnerabilities result in tons of pages about LDAP injection including an ![OWASP LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) page. At this point I spent some time reading up on LDAP injection, and found a nice ![PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/LDAP%20Injection/README.md) resource. This page describes in detail how LDAP injection works, so if it is a new topic for you as well I highly suggest reading up on this. 
 
