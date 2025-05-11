@@ -1,6 +1,7 @@
 # VUCTF2025 Roomba-Rebellion
 In this web challenge, we are given a website where we can download log files.
-![homepage](https://github.com/TSpeel/writeups/tree/main/VUCTF2025/Roomba-Rebellion/images/homepage.png)
+
+![homepage](https://github.com/TSpeel/writeups/blob/main/VUCTF2025/Roomba-Rebellion/images/homepage.png)
 
 ## Initial vulnerability
 The site does not seem to have any attack surface other than this download functionality. The most basic attack to try here is path traversal with a payload as follows:
