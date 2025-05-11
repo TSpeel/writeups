@@ -85,5 +85,5 @@ io = start()
 io.sendlineafter(b"Your guess: \n", char_array)
 print(io.recvall().decode())
 ```
-The full script can be found here
+The full script can be found [here](https://github.com/TSpeel/writeups/blob/main/VUCTF2025/Time/exploit.py).
 
