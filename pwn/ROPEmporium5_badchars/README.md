@@ -7,8 +7,8 @@ This input filter works by comparing payload bytes to the ASCII values of these 
 ## The plan
 To evade the input filter, we can try to smuggle our string `flag.txt` into memory by altering the values when writing them, and using gadgets to repair them after they are written. 
 
-We can write to the address `0x601028`, which is the `.bss` segment as in the write4 challenge. The gadget we can use for writing is slightly different this time: `mov qword [r13],r12; ret`. We can use this gadget to write `flag.txt` XOR'd with an arbitrary value to `0x601028`, and then XOR the written string back to `flag.txt` with a XOR gadget: `xor byte ptr [r15], r14b; ret`. 
-We also have a useful gadget to set `r12`, `r13`, `r14` and `r15`: `pop r12,r13,r14,r15; ret`.
+We can write to the address `0x601028`, which is the `.bss` segment as in the write4 challenge. The gadget we can use for writing is slightly different this time: `mov qword [r13],r12; ret;`. We can use this gadget to write `flag.txt` XOR'd with an arbitrary value to `0x601028`, and then XOR the written string back to `flag.txt` with a XOR gadget: `xor byte ptr [r15], r14b; ret;`. 
+We also have a useful gadget to set `r12`, `r13`, `r14` and `r15`: `pop r12,r13,r14,r15; ret;`.
 
 This allows us to create a write function as follows:
 ```
@@ -36,7 +36,7 @@ def write8bytesandxor(writable_address, bytestr):
     return payload
 
 ```
-In this function we use the value 17 to XOR. This is an arbitrary choice, most values under 8 bits will work, as long as the result of the XOR does not contain the blacklisted characters `x`, `g`, `a` and `.`. The value has to be under 256, as the gadget `xor byte ptr [r15], r14b; ret` only takes the lowest 8 bits of `r14`.
+In this function we use the value 17 to XOR. This is an arbitrary choice, most values under 8 bits will work, as long as the result of the XOR does not contain the blacklisted characters `x`, `g`, `a` and `.`. The value has to be under 256, as the gadget `xor byte ptr [r15], r14b; ret;` only takes the lowest 8 bits of `r14`.
 
 ## Nearly there
 Using this function to smuggle `flag.txt` into memory, we can now call `print_file()` with the address of our string:
