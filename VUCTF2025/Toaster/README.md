@@ -110,7 +110,7 @@ This scripts sends 28 bytes of padding to reach the return address. This offset 
 The result of this can be found below, where the stack shows the offset `0x28` contains the return pointer back to `main()`.
 
 ```
-───────────────────────────────────────────────────────────[ DISASM / x86-64 / set emulate on ]────────────────────────────────────────────────────────────
+────────────────────────────────────────────[ DISASM / x86-64 / set emulate on ]─────────────────────────────────────────────
    0x563038ee73c8 <kitchen+5>     mov    rbp, rsp               RBP => 0x7ffccb089760 —▸ 0x7ffccb089770 ◂— 1
    0x563038ee73cb <kitchen+8>     sub    rsp, 0x20              RSP => 0x7ffccb089740 (0x7ffccb089760 - 0x20)
    0x563038ee73cf <kitchen+12>    lea    rax, [rip + 0xdda]     RAX => 0x563038ee81b0 ◂— 'Please give me your secret recipe? '
@@ -124,7 +124,7 @@ The result of this can be found below, where the stack shows the offset `0x28` c
    0x563038ee73ef <kitchen+44>    call   read@plt                    <read@plt>
  
    0x563038ee73f4 <kitchen+49>    nop    
-─────────────────────────────────────────────────────────────────────────[ STACK ]─────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────[ STACK ]──────────────────────────────────────────────────────────
 00:0000│ rsp 0x7ffccb089740 ◂— 0
 01:0008│-018 0x7ffccb089748 —▸ 0x7ffccb089898 —▸ 0x7ffccb08b222 ◂— 'COLORFGBG=15;0'
 02:0010│-010 0x7ffccb089750 —▸ 0x7fe642423000 (_rtld_global) —▸ 0x7fe642424310 —▸ 0x563038ee6000 ◂— 0x10102464c457f
