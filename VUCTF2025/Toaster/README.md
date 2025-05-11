@@ -76,15 +76,24 @@ pwndbg> x toast
 pwndbg> x main
 0x564a64fd53f7 <main>:  0xfa1e0ff3
 ```
-When comparing this to another run, we can see that the final three characters are always the same, but all the characters before those are random:
+To demonstrate why partially overwriting could work, these addresses are stored in little endian like this:
+```
+toast():
+\x7d\x52\xfd\x64\x4a\x56
+main():
+\xf7\x53\xfd\x64\x4a\x56
+```
+Overwriting the start of the return address to `main()` with `\x7d\x52` would thus make it point to `toast()` instead.
+
+Comparing these addresses to those in another run, we can see that the final three characters are always the same, but all the characters before those are random:
 ```
 pwndbg> x toast
 0x55d0d5d7127d <toast>: 0xfa1e0ff3
 pwndbg> x main
 0x55d0d5d713f7 <main>:  0xfa1e0ff3
 ```
-We thus have to overwrite the final three characters of the return pointer with `27d` to return to `toast()`. The problem is that we can only write bytes, and a single byte corresponds to two address characters.
-We can thus either overwrite 2 or 4 characters, but not three. 
+We thus have to overwrite the final three characters of the return pointer with `27d` to return to `toast()`. 
+The problem is that we cannot only overwrite the last three bytes due to the way they are stored as described earlier. If we want to overwrite the last three characters, we will also overwrite the 4th last character.
 Luckily, this is where the randomness of the addresses can actually help us. We know the address has to end in `x27d`, where `x` is random every time.
 However, we can simply choose any character for `x`, and run our attack multiple times until the randomised address loaded equals `x`. which will happen once every 16 runs on average as addresses are hexidecimal.
 We can do this using the following pwntools script:
