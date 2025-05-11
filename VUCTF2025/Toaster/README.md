@@ -128,6 +128,7 @@ The result of this can be found below, where the stack shows the offset `0x28` c
 ```
 This offset is then followed by the last 2 bytes of the address of `toast()` (`0x127d`).
 
+The full script can be found [here](https://github.com/TSpeel/writeups/blob/main/VUCTF2025/Toaster/exploit.py). Remember, the script has to be run on average 16 times to be successful.
 
 ## `sendafter()` vs `sendlineafter()`
 When I first attempted the challenge, I was having issues where I was not just overwriting the return pointer with `0x0x127d`, but with `0x0a127d`. 
