@@ -84,7 +84,7 @@ def write4bytes(writable_address, bytestr):
     payload += p64(write_mov_gadget)   # Trigger write
     return payload
 ```
-We can use this function to write `flag.txt` to our writable address as follows (note that it also seem to work without supplying the null bytes):
+We can use this function to write `flag.txt` to our writable address as follows (note that it also seem to work without supplying the null bytes, likely because the segment is null initialised):
 ```
 writable_address = 0x601028 # in .data segment
 
