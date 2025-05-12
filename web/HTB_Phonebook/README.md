@@ -1,5 +1,5 @@
 # HackTheBox Phonebook
-## Reconnaisance
+## Reconnaissance
 After booting up the challenge, we are greeted with the following login screen:
 ![Login screen](/web/HTB_Phonebook/images/login.PNG)
 This screen reveals some interesting information. First of all, the website allows for logging in with workstation usernames and passwords. It is thus most likely connected to Active Directory in some way. Second, there is most likely a user named Reese.
