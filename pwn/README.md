@@ -8,3 +8,4 @@ The ROP Emporium challenges are a series of challenges to learn return-oriented 
 * [write4](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium4_write4/README.md) is about using gadgets to write to memory.
 * [badchars](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium5_badchars/README.md) is a follow-up to write4 where an input filter has to be bypassed.
 * [fluff](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium6_fluff/README.md) is another follow-up to write4 where only uncommon gadgets are available.
+* [pivot](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium7_pivot/README.md) is a challenge that introduces stack pivoting.
