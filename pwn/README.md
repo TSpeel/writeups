@@ -9,3 +9,4 @@ The ROP Emporium challenges are a series of challenges to learn return-oriented 
 * [badchars](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium5_badchars/README.md) is a follow-up to write4 where an input filter has to be bypassed.
 * [fluff](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium6_fluff/README.md) is another follow-up to write4 where only uncommon gadgets are available.
 * [pivot](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium7_pivot/README.md) is a challenge that introduces stack pivoting.
+* [ret2csu](https://github.com/TSpeel/writeups/blob/main/pwn/ROPEmporium8_ret2csu/README.md) is a follow-up to the callme challenge that introduces the ret2csu technique.
